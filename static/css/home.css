@@ -1,0 +1,151 @@
+/* home.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.4rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #00d4ff;
+}
+
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #00d4ff;
+  transform: translateY(-2px);
+}
+
+/* Hero */
+.hero {
+  height: 100vh;
+  background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.9)),
+    url("../images/buses.png") center/cover no-repeat fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 900px;
+  padding: 0 24px;
+}
+
+.dynamic-title {
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  font-weight: 900;
+  margin-bottom: 1.2rem;
+  letter-spacing: -1.5px;
+  opacity: 0;
+  transform: translateY(60px);
+  animation: fadeUp 1.8s forwards 0.6s;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.25);
+}
+
+.dynamic-title span {
+  color: #00d4ff;
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+}
+
+.tagline {
+  font-size: 1.4rem;
+  max-width: 680px;
+  margin: 0 auto 3rem;
+  color: #94a3b8;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUp 1.8s forwards 1s;
+}
+
+/* Sections */
+.section {
+  padding: 140px 5% 120px;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Footer */
+.footer {
+  background: #0a0f1a;
+  padding: 3rem 5%;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 5%;
+    flex-wrap: wrap;
+  }
+  .nav-links {
+    gap: 1.8rem;
+    font-size: 0.95rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .dynamic-title {
+    font-size: 3rem;
+  }
+}

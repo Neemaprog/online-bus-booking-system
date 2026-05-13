@@ -1,0 +1,230 @@
+/* =========================
+   GENERAL RESET & BODY
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: #f1f4f8;
+  color: #333;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  background: #0a3d62;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #fbc531;
+}
+
+/* =========================
+   PAGE WRAPPER
+========================= */
+.seat-page {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* =========================
+   LEGEND
+========================= */
+.legend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #ffffff;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.legend div {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.legend span {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.legend .available {
+  background: #28a745;
+}
+
+.legend .unavailable {
+  background: #dc3545;
+}
+
+.legend .selected {
+  background: #ffc107;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.horizontal-container {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+
+/* =========================
+   SEAT MAP
+========================= */
+.seat-map {
+  flex: 3;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.bus-front {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* =========================
+   SEATS GRID
+========================= */
+.seats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 64px);
+  gap: 14px;
+  justify-content: center;
+}
+
+/* =========================
+   SEAT BUTTON
+========================= */
+.seat-form {
+  margin: 0;
+}
+
+.seat {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* AVAILABLE */
+.seat.available {
+  background: linear-gradient(145deg, #2ecc71, #27ae60);
+  color: #ffffff;
+}
+
+.seat.available:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* UNAVAILABLE */
+.seat.unavailable {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  color: #ffffff;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+/* SELECTED */
+.seat.selected {
+  background: linear-gradient(145deg, #f1c40f, #f39c12);
+  color: #000000;
+  border: 3px solid #e67e22;
+  transform: scale(1.05);
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+.selection-panel {
+  flex: 1;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.total-price label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.total-price span {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0a3d62;
+}
+
+/* =========================
+   CONTINUE BUTTON
+========================= */
+.continue-btn {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(145deg, #0066cc, #004999);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+  background: linear-gradient(145deg, #004999, #003366);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}

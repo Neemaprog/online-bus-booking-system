@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="sw">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Malipo - BusSafe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/payment_countdown.css' %}" />
+  </head>
+  <body>
+    <!-- Navbar sawa na home -->
+    <nav class="navbar">
+      <div class="logo">BusSafe</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'search' %}">Tafuta Basi</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <div class="payment-layout">
+      <!-- Kushoto: Timer + Info + Methods + Note -->
+      <div class="main-content">
+        <h1>Time remains for payment</h1>
+
+        <div class="timer-box">
+          <div id="countdown">03:00</div>
+        </div>
+
+        <div class="payment-info">
+          <p>
+            <strong>Namba ya biashara:</strong> {{ merchant_number }}
+            <span
+              class="copy-btn"
+              onclick="copyToClipboard('{{ merchant_number }}')"
+              >📋</span
+            >
+          </p>
+          <p>
+            <strong>Kumbukumbu Na.:</strong> {{ reference_number }}
+            <span
+              class="copy-btn"
+              onclick="copyToClipboard('{{ reference_number }}')"
+              >📋</span
+            >
+          </p>
+          <p><strong>Jumla kuu:</strong> TZS {{ total_price|floatformat:0 }}</p>
+        </div>
+
+        <div class="payment-methods">
+          <h2>Chagua njia ya malipo</h2>
+          <div class="methods-grid">
+            <!-- Vodacom M-Pesa -->
+            <div class="method-card" data-method="vodacom">
+              <img src="{% static 'images/voda.png' %}" alt="Vodacom M-Pesa" />
+              <p>Vodacom M-Pesa</p>
+            </div>
+
+            <!-- Airtel Money (chini ya M-Pesa) -->
+            <div class="method-card" data-method="airtel">
+              <img src="{% static 'images/aitel.png' %}" alt="Airtel Money" />
+              <p>Airtel Money</p>
+            </div>
+
+            <!-- Mixx by Yas -->
+            <div class="method-card" data-method="mixx">
+              <img src="{% static 'images/yas.png' %}" alt="Mixx by Yas" />
+              <p>Mixx by Yas</p>
+            </div>
+
+            <!-- Halopesa (chini ya Yas) -->
+            <div class="method-card" data-method="halopesa">
+              <img src="{% static 'images/halo.png' %}" alt="Halopesa" />
+              <p>Halopesa</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="note">
+          Tuma malipo kabla ya mda kuisha. Viti vitajiblok automatically kama
+          malipo hayajafanyika.
+        </p>
+      </div>
+
+      <!-- Sidebar ya kulia: Maelekezo ya malipo (inabadilika) -->
+      <div class="sidebar" id="instructions">
+        <button
+          class="close-sidebar"
+          onclick="
+            document.getElementById('instructions').style.display = 'none'
+          "
+        >
+          ×
+        </button>
+        <h3>Maelekezo ya Kulipa</h3>
+        <div id="instructions-content">
+          Chagua njia ya malipo upande wa kushoto ili kuona hatua za kulipa.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Timer 3 minutes countdown
+      let timeLeft = 3 * 60;
+      const timerElement = document.getElementById("countdown");
+
+      const countdown = setInterval(() => {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        timerElement.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          timerElement.textContent = "00:00";
+          timerElement.style.color = "red";
+          alert("Mda umekwisha! Viti vimejiblok. Chagua tena safari.");
+          window.location.href = "{% url 'seat_selection' trip.id %}";
+        }
+        timeLeft--;
+      }, 1000);
+
+      // Copy to clipboard
+      function copyToClipboard(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            alert("Copied: " + text);
+          })
+          .catch((err) => {
+            alert("Failed to copy");
+          });
+      }
+
+      // Sidebar intelligence: Maelekezo yanabadilika upande wa kulia
+      document.querySelectorAll(".method-card").forEach((card) => {
+        card.addEventListener("click", function () {
+          const method = this.dataset.method;
+          const sidebar = document.getElementById("instructions");
+          const content = document.getElementById("instructions-content");
+
+          sidebar.style.display = "block";
+
+          let text = "";
+
+          if (method === "vodacom") {
+            text = `<strong>Vodacom M-Pesa</strong><br><br>
+                            1. Piga <strong>*150*00#</strong><br>
+                            2. Chagua <strong>4</strong> (Lipia Bili)<br>
+                            3. Chagua <strong>1</strong> (Lipia Bili)<br>
+                            4. Ingiza Namba ya Biashara: <strong>{{ merchant_number }}</strong><br>
+                            5. Ingiza Kumbukumbu Namba: <strong>{{ reference_number }}</strong><br>
+                            6. Ingiza kiasi: <strong>TZS {{ total_price|floatformat:0 }}</strong><br>
+                            7. Ingiza PIN yako.`;
+          } else if (method === "airtel") {
+            text = `<strong>Airtel Money</strong><br><br>
+                            1. Piga <strong>*150*60#</strong><br>
+                            2. Chagua <strong>5</strong> (Lipia Bili)<br>
+                            3. Ingiza Namba ya Biashara: <strong>{{ airtel_merchant }}</strong><br>
+                            4. Ingiza Kumbukumbu Namba: <strong>{{ reference_number }}</strong><br>
+                            5. Ingiza kiasi: <strong>TZS {{ total_price|floatformat:0 }}</strong><br>
+                            6. Ingiza PIN yako.`;
+          } else if (method === "halopesa") {
+            text = `<strong>Halopesa</strong><br><br>
+                            1. Piga <strong>*150*66#</strong><br>
+                            2. Chagua <strong>4</strong> (Lipia Bili)<br>
+                            3. Ingiza Namba ya Biashara: <strong>{{ halopesa_merchant }}</strong><br>
+                            4. Ingiza Kumbukumbu Namba: <strong>{{ reference_number }}</strong><br>
+                            5. Ingiza kiasi: <strong>TZS {{ total_price|floatformat:0 }}</strong><br>
+                            6. Ingiza PIN yako.`;
+          } else if (method === "mixx") {
+            text = `<strong>Mixx by Yas</strong><br><br>
+                            1. Piga <strong>*150*01#</strong> (Tigo) au tumia app ya Yas<br>
+                            2. Chagua Lipia Bili au Mixx<br>
+                            3. Ingiza Namba ya Biashara: <strong>{{ mixx_merchant }}</strong><br>
+                            4. Ingiza Kumbukumbu Namba: <strong>{{ reference_number }}</strong><br>
+                            5. Ingiza kiasi: <strong>TZS {{ total_price|floatformat:0 }}</strong><br>
+                            6. Ingiza PIN yako.`;
+          }
+
+          content.innerHTML = text;
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: #ffffff; /* white background like payment countdown */
+  color: #333333; /* dark text like payment countdown */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Navbar - same as payment countdown */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.4rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2563eb; /* blue like payment countdown */
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #00d4ff;
+}
+
+/* Main content - padding for fixed navbar */
+.preview-container {
+  padding-top: 140px; /* space ya navbar */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  min-height: 100vh;
+}
+
+/* Preview header - white with blue dotted border */
+.preview-header {
+  background: #ffffff;
+  color: #2563eb;
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border: 2px dotted #2563eb;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.close-btn {
+  position: absolute;
+  right: 1.5rem;
+  top: 0.8rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #2563eb;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* Grid ya columns 3 kama picha yako */
+.preview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Kila box - white with blue dotted border */
+.preview-box {
+  background: #ffffff;
+  border: 2px dotted #2563eb;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.preview-box h3 {
+  color: #ef4444; /* red kama picha */
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.preview-box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.preview-box td {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #334155;
+}
+
+.preview-box td:first-child {
+  font-weight: 600;
+  width: 45%;
+  color: #94a3b8;
+}
+
+/* Malipo section */
+.total-section {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.total-price {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.total-price span {
+  color: #00d4ff;
+  font-weight: 700;
+}
+
+.terms {
+  margin: 1.5rem 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+
+.terms a {
+  color: #00d4ff;
+  text-decoration: underline;
+}
+
+.continue-btn {
+  padding: 1rem 3rem;
+  background: linear-gradient(
+    90deg,
+    #ef4444,
+    #dc2626
+  ); /* red gradient kama picha */
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* Responsive - stack vertically on mobile */
+@media (max-width: 1024px) {
+  .preview-grid {
+    grid-template-columns: 1fr;
+  }
+}

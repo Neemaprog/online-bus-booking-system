@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="sw">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ company_name }} - BusSafe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/company_trips.css' %}" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">BusSafe</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'search' %}">Tafuta Basi</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <!-- Welcoming Header -->
+    <header class="company-header">
+      <div class="container">
+        <h1>Welcome to {{ company_name|upper }}</h1>
+        <p>Safiri kwa faraja na usalama wa hali ya juu.</p>
+      </div>
+    </header>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="container">
+        <h2>Ratiba za {{ company_name }} ({{ num_trips }} trips)</h2>
+        <select class="time-select" onchange="window.location = this.value">
+          <option
+            value="?company={{ company_name|urlencode }}&from={{ from_place|urlencode }}&to={{ to_place|urlencode }}&date={{ travel_date }}&time=all"
+            {%
+            if
+            time_filter=""
+            ="all"
+            %}selected{%
+            endif
+            %}
+          >
+            Zote
+          </option>
+          <option
+            value="?company={{ company_name|urlencode }}&from={{ from_place|urlencode }}&to={{ to_place|urlencode }}&date={{ travel_date }}&time=day"
+            {%
+            if
+            time_filter=""
+            ="day"
+            %}selected{%
+            endif
+            %}
+          >
+            Day ☀️ (6am-6pm)
+          </option>
+          <option
+            value="?company={{ company_name|urlencode }}&from={{ from_place|urlencode }}&to={{ to_place|urlencode }}&date={{ travel_date }}&time=night"
+            {%
+            if
+            time_filter=""
+            ="night"
+            %}selected{%
+            endif
+            %}
+          >
+            Night 🌙 (6pm-6am)
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Trips List -->
+    <main class="trips-main">
+      <div class="container">
+        {% if trips %} {% for trip in trips %}
+        <div class="trip-card">
+          <div class="trip-header">
+            <h3>{{ trip.bus.company_name|upper }}</h3>
+            <span class="price">TZS {{ trip.base_price|floatformat:0 }}</span>
+          </div>
+
+          <div class="trip-body">
+            <div class="trip-route">
+              <strong
+                >{{ trip.route.origin }} → {{ trip.route.destination }}</strong
+              >
+              <span>{{ trip.bus.bus_type|capfirst }} </span>
+            </div>
+
+            <div class="trip-time">
+              <div class="departure">
+                <span>KUONDOKA</span>
+                <strong>{{ trip.departure_time|time:"H:i" }}</strong>
+                <span>({{ trip.departure_time|date:"d-m-Y" }})</span>
+              </div>
+
+              <div class="duration">
+                <span>{{ trip.route.estimated_hours|floatformat:1 }}h</span>
+              </div>
+
+              <div class="arrival">
+                <span>KUFIKIA</span>
+                <strong>{{ trip.arrival_time|time:"H:i" }}</strong>
+                <span>({{ trip.arrival_time|date:"d-m-Y" }})</span>
+              </div>
+            </div>
+
+            <div class="trip-footer">
+              <span class="viti"
+                >Viti Vilivyobaki: {{ trip.available_seats }}</span
+              >
+              <a href="{% url 'seat_selection' trip.id %}" class="btn-tazama"
+                >TAZAMA SITI</a
+              >
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <div class="no-results">
+          <h2>Hakuna safari zinazopatikana kwa sasa.</h2>
+          <p>Jaribu tarehe au time filter nyingine.</p>
+        </div>
+        {% endif %}
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 BusSafe. Haki zote zimehifadhiwa. Safiri salama, book smart.</p>
+    </footer>
+    <script>
+      document.querySelectorAll(".btn-tazama").forEach((button) => {
+        button.addEventListener("click", function () {
+          const tripId = this.getAttribute("data-trip-id");
+          window.location.href = `/seat-selection/${tripId}/`;
+        });
+      });
+    </script>
+  </body>
+</html>

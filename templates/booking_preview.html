@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="sw">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hakiki Taarifa Zako - BusSafe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/booking_preview.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">BusSafe</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'search' %}">Tafuta Basi</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <div class="preview-container">
+      <div class="preview-header">
+        <h1>TAFADHALI HAKIKI TAARIFA ZAKO</h1>
+        <span class="close-btn" onclick="history.back()">×</span>
+      </div>
+
+      <div class="content-spacer"></div>
+
+      <div class="preview-grid">
+        <!-- Taarifa Za Safari -->
+        <div class="preview-box">
+          <h3>Taarifa Za Safari</h3>
+          <table>
+            <tr>
+              <td>Msafirishaji:</td>
+              <td>{{ trip.bus.company_name }}</td>
+            </tr>
+            <tr>
+              <td>Bus Na.:</td>
+              <td>{{ trip.bus.plate_number }}</td>
+            </tr>
+            <tr>
+              <td>Tarehe ya safari:</td>
+              <td>{{ trip.departure_time|date:"d-m-Y" }}</td>
+            </tr>
+            <tr>
+              <td>Ruti:</td>
+              <td>{{ trip.route.origin }} - {{ trip.route.destination }}</td>
+            </tr>
+            <tr>
+              <td>Jumla ya siti:</td>
+              <td>{{ seat_count }}</td>
+            </tr>
+            <tr>
+              <td>Jumla ya bei:</td>
+              <td>TZS {{ total_price|floatformat:0 }}</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Taarifa Za Abiria -->
+        <div class="preview-box passenger-section">
+          <h3 class="section-title">Taarifa Za Abiria</h3>
+          {% for key, passenger in passenger_data.items %}
+          <div class="passenger-entry animated-passenger">
+            <div class="passenger-header">
+              <span class="seat-number">{{ passenger.seat }}</span>
+              <span class="passenger-name">{{ passenger.first_name }} {{ passenger.last_name }}</span>
+            </div>
+            <div class="passenger-details">
+              <div class="detail-item">
+                <span class="detail-icon">📱</span>
+                <span class="detail-text">{{ passenger.phone|default:"N/A" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-icon">👤</span>
+                <span class="detail-text">{{ passenger.gender|default:"N/A" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-icon">🎂</span>
+                <span class="detail-text">{{ passenger.age_group|default:"N/A" }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="detail-icon">🌍</span>
+                <span class="detail-text">{{ passenger.nationality|default:"Tanzania" }}</span>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="no-passengers">
+            <div class="no-passengers-icon">👥</div>
+            <p>Hakuna maelezo ya abiria yaliyohifadhiwa bado.</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Taarifa Za Malipo -->
+        <div class="preview-box">
+          <h3>Taarifa Za Malipo</h3>
+          <table>
+            <tr>
+              <td>Jumla ndogo:</td>
+              <td>TZS {{ total_price|floatformat:0 }}</td>
+            </tr>
+            <tr>
+              <td>Ada:</td>
+              <td>TZS 0.00</td>
+            </tr>
+            <tr>
+              <td>Jumla ya malipo:</td>
+              <td>TZS {{ total_price|floatformat:0 }}</td>
+            </tr>
+          </table>
+
+          <div class="terms">
+            <input type="checkbox" id="terms" required />
+            <label for="terms">
+              Nakubali Vigezo Na Masharti, Sera Ya Faragha, na Return Refund
+              Policy.
+            </label>
+          </div>
+          <button
+            type="button"
+            class="continue-btn"
+            data-redirect-url="{% url 'payment_countdown' trip.id %}"
+          >
+            ENDELEEA NA MALIPO
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    document
+      .querySelector(".continue-btn")
+      .addEventListener("click", function () {
+        const url = this.dataset.redirectUrl;
+        window.location.href = url;
+      });
+  </script>
+</html>

@@ -1,0 +1,213 @@
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: #ffffff; /* white background like company trips */
+  color: #333333; /* dark text like company trips */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Navbar - same as company trips */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 1.4rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2563eb; /* blue like company trips */
+}
+
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #374151;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* Layout - white with blue dotted borders */
+.payment-layout {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #ffffff;
+  min-height: 60vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+  background: #ffffff;
+  flex: 3;
+}
+
+/* Timer Box - White with Blue Dotted Border */
+.timer-box {
+  background: #ffffff;
+  border: 2px dotted #2563eb;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+#countdown {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2563eb;
+  font-family: 'Courier New', monospace;
+}
+
+/* Payment Info - White Cards */
+.payment-info {
+  background: #ffffff;
+  border: 2px dotted #2563eb;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.payment-info p {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  color: #333333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-info strong {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.copy-btn {
+  cursor: pointer;
+  margin-left: 1rem;
+  color: #2563eb;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+  color: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* Payment Methods Section */
+.payment-methods h2 {
+  color: #2563eb;
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+}
+
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.method-card {
+  background: #ffffff;
+  border: 2px dotted #2563eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.method-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+  border-color: #1d4ed8;
+}
+
+.method-card img {
+  width: 80px;
+  height: auto;
+  margin-bottom: 0.8rem;
+}
+
+.method-card p {
+  color: #333333;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sidebar {
+  flex: 2;
+  background: #1569e7; /* blue navy */
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(100, 255, 218, 0.4);
+  box-shadow: 0 0 20px rgba(100, 255, 218, 0.25);
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+  display: none;
+  color: #ffffff;
+}
+
+.sidebar h3 {
+  color: #64ffda;
+  margin-bottom: 1.2rem;
+}
+
+.sidebar p {
+  line-height: 1.7;
+  color: #e6f1ff;
+}
+
+.note {
+  color: #6b7280;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 2rem;
+  background: #f8fafc;
+  border: 1px dotted #2563eb;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .payment-layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    position: static;
+  }
+  .methods-grid {
+    grid-template-columns: 1fr;
+  }
+}

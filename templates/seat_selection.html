@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chagua Viti - {{ trip.bus.company_name }} | BusSafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/seat_selection.css' %}" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">BusSafe</div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'search' %}">Tafuta Basi</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="seat-page">
+        <div class="legend">
+            <div><span class="available"></span>Inapatikana</div>
+            <div><span class="unavailable"></span>Haipatikani</div>
+            <div><span class="selected"></span>Chaguo lako</div>
+        </div>
+
+        <div class="horizontal-container">
+            <div class="seat-map">
+                <div class="bus-front">
+                    <span>🚌</span>
+                </div>
+                <div class="seats-grid">
+                    {% for seat in seats %}
+                    <form method="post" action="{% url 'seat_selection' trip.id %}" class="seat-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="{% if seat.is_blocked and not seat.is_booked %}unselect{% else %}select{% endif %}">
+                        <input type="hidden" name="seat_number" value="{{ seat.seat_number }}">
+                        <button type="submit" class="seat 
+                            {% if seat.is_booked %}unavailable{% elif seat.is_blocked %}selected{% else %}available{% endif %}"
+                            {% if seat.is_booked %}disabled{% endif %}>
+                            {{ seat.seat_number }}
+                        </button>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="selection-panel">
+                <div class="total-price">
+                    <label>Jumla ({{ selected_seats|length }} viti)</label>
+                    <span>TZS {{ total_price|floatformat:0 }}</span>
+                </div>
+
+                <button type="button" class="continue-btn" 
+                        data-seats-count="{{ selected_seats|length }}"
+                        data-redirect-url="{% url 'passenger_details' trip.id %}">
+                    ENDELEA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      document.querySelector('.continue-btn').addEventListener('click', function() {
+        const count = parseInt(this.dataset.seatsCount) || 0;
+        const url = this.dataset.redirectUrl;
+
+        if (count === 0) {
+          alert('You must select at least one seat');
+        } else {
+          window.location.href = url;
+        }
+      });
+    </script>
+</body>
+</html>

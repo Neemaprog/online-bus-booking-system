@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="sw">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BusSafe - Book Safe with Us</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">BusSafe</div>
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="{% url 'search' %}">Search Bus</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="dynamic-title">Book <span>Safe</span> with Us</h1>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2>Kuhusu Sisi</h2>
+        <p>
+          BusSafe ni mfumo wa kisasa wa ku-book basi mtandaoni unaounganisha
+          abiria na makampuni mbalimbali ya mabasi nchini Tanzania.
+          Tunahakikisha unapata chaguo bora, bei nafuu na usalama wa hali ya juu
+          kwa kila safari.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2>Wasiliana Nasi</h2>
+        <p>
+          Kama una swali au unahitaji msaada, tuko tayari kukusaidia wakati
+          wowote.<br />
+          Email: support@bus-safe.co.tz<br />
+          Simu: +255 700 000 111
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 BusSafe. Haki zote zimehifadhiwa. Safiri salama, book smart.</p>
+    </footer>
+  </body>
+</html>

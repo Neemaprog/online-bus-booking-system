@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="sw">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matokeo ya Tafutio - BusSafe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/search_results.css' %}" />
+  </head>
+  <body>
+    
+    <nav class="navbar">
+      <div class="logo">BusSafe</div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'search' %}" class="active">Tafuta Basi</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <!-- Results Section -->
+    <section class="results-section">
+      <div class="container">
+        <div class="summary-card">
+          <h1>Matokeo Yako</h1>
+          <p class="summary">
+            Kutoka: <strong>{{ from_place }}</strong> | Kwenda:
+            <strong>{{ to_place }}</strong> | Tarehe:
+            <strong>{{ travel_date }}</strong>
+          </p>
+        </div>
+
+        {% if companies %}
+        <h2>Makampuni Yanayopatikana ({{ num_companies }})</h2>
+        <div class="companies-grid">
+          {% for company in companies %}
+          <!-- Ndani ya companies-grid loop -->
+          <div class="company-card">
+            <h3>{{ company }}</h3>
+            <p class="select-prompt">
+              Chagua kampuni hii ili uone maelezo zaidi
+            </p>
+            <a
+              href="{% url 'company_trips' %}?company={{ company|urlencode }}&from={{ from_place|urlencode }}&to={{ to_place|urlencode }}&date={{ travel_date }}"
+              class="btn-select"
+              >Chagua Kampuni</a
+            >
+          </div>
+          {% endfor %}
+        </div>
+        {% elif no_results %}
+        <div class="no-results">
+          <h2>{{ message }}</h2>
+          <a href="{% url 'search' %}" class="btn-back">Search Again</a>
+        </div>
+        {% elif error %}
+        <div class="error">
+          <h2>{{ error }}</h2>
+          <a href="{% url 'search' %}" class="btn-back">Search Again</a>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 BusSafe. Haki zote zimehifadhiwa. Safiri salama, book smart.</p>
+    </footer>
+  </body>
+</html>
